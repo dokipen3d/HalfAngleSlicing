@@ -39,6 +39,9 @@ public class HalfAngleMesh : MonoBehaviour {
 	private int[] edgeTestOrder;
 	private int[] vertexTestOrder;
 
+	private Matrix4x4 M;
+
+	public Camera lightCam;
 
 	private GameObject[] planes;
 
@@ -255,7 +258,7 @@ public class HalfAngleMesh : MonoBehaviour {
 			}
 //			Debug.Log("max_dist is " + max_dist);
 //			Debug.Log("min_dist is " + min_dist);
-			Matrix4x4 M = Matrix4x4.TRS (transform.position, transform.rotation, transform.localScale);
+			M = Matrix4x4.TRS (transform.position, transform.rotation, transform.localScale);
 
 			//Debug.DrawLine(M.MultiplyPoint3x4(halfVector*max_dist), M.MultiplyPoint3x4(halfVector*min_dist));
 			//Debug.DrawRay(transform.position + M.MultiplyPoint3x4(halfVector*min_dist),M.MultiplyPoint3x4(halfVector*max_dist)*2);
@@ -416,6 +419,11 @@ public class HalfAngleMesh : MonoBehaviour {
 			indices.Clear();
 			uvs.Clear();
 			totalVerts = 0;
+			gameObject.layer = 8;
+			//Graphics.DrawMeshNow(planemesh, M);
+			lightCam.Render();
+			gameObject.layer = 0;
+
 //			invertedCubeTransform.transform.localScale = inverseScale;
 //			invertedCubeTransform.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
 
